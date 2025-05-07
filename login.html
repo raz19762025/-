@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מעבדה ניידת - התחברות וצ'אט</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="min-h-screen relative bg-gradient-to-br from-[#0B1120] to-[#1E293B]">
+    <!-- Background image overlay -->
+    <div class="absolute inset-0 pointer-events-none bg-cover bg-center bg-no-repeat opacity-10" style="background-image: url('https://ucarecdn.com/349241f8-f900-4806-a578-9bf2e9b6eb4d/');"></div>
+    <header class="relative z-10 bg-[#0B1120] bg-opacity-90 shadow-lg">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-white">מעבדה ניידת</div>
+                <div id="desktop-menu" class="hidden md:flex items-center space-x-6 space-x-reverse">
+                    <a href="/" class="text-white hover:text-blue-400 transition duration-300">דף הבית</a>
+                    <a href="/repairs" class="text-white hover:text-blue-400 transition duration-300">שירותי תיקון</a>
+                    <a href="/pricing" class="text-white hover:text-blue-400 transition duration-300">מחירון</a>
+                    <a href="/contact" class="text-white hover:text-blue-400 transition duration-300">צור קשר</a>
+                    <button id="logout-button" class="text-white hover:text-red-400 transition duration-300 hidden">התנתק</button>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="mt-4 md:hidden hidden">
+                <a href="/" class="block text-white py-2 hover:text-blue-400">דף הבית</a>
+                <a href="/repairs" class="block text-white py-2 hover:text-blue-400">שירותי תיקון</a>
+                <a href="/pricing" class="block text-white py-2 hover:text-blue-400">מחירון</a>
+                <a href="/contact" class="block text-white py-2 hover:text-blue-400">צור קשר</a>
+                <button id="mobile-logout-button" class="block w-full text-right text-white py-2 hover:text-red-400 hidden">התנתק</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="relative z-10 container mx-auto px-4 py-12">
+        <section class="text-center text-white mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">התחברות למערכת</h1>
+            <p class="text-xl md:text-2xl mb-8">התחבר כדי לנהל את התיקונים שלך</p>
+        </section>
+        <div class="flex flex-col md:flex-row justify-center gap-8">
+            <!-- Login Panel -->
+            <div class="bg-white bg-opacity-10 p-8 rounded-lg shadow-xl w-full max-w-md">
+                <h2 class="text-3xl font-bold text-center mb-8 text-white">ברוכים הבאים</h2>
+                <div class="space-y-4">
+                    <button id="google-login" class="w-full flex items-center justify-center gap-3 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-all duration-300">
+                        <i class="fab fa-google text-xl"></i>
+                        <span>התחבר עם Google</span>
+                    </button>
+                    <button id="facebook-login" class="w-full flex items-center justify-center gap-3 bg-[#1877F2] hover:bg-[#1664D9] text-white px-6 py-3 rounded-lg transition-all duration-300">
+                        <i class="fab fa-facebook text-xl"></i>
+                        <span>התחבר עם Facebook</span>
+                    </button>
+                    <div class="relative my-6">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-white border-opacity-20"></div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <span class="px-4 text-sm text-white text-opacity-60 bg-[#1E293B]">או</span>
+                        </div>
+                    </div>
+                    <form id="login-form" class="space-y-4">
+                        <div id="login-error" class="text-red-500 text-center"></div>
+                        <div class="space-y-2">
+                            <label class="block text-white text-right mb-1">אימייל</label>
+                            <input type="email" id="email-input" name="email" placeholder="הכנס את האימייל שלך" required
+                                class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-white placeholder-opacity-60 focus:border-blue-400 focus:ring-1 focus:ring-blue-400" />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-white text-right mb-1">סיסמה</label>
+                            <input type="password" id="password-input" name="password" placeholder="הכנס את הסיסמה שלך" required
+                                class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-white placeholder-opacity-60 focus:border-blue-400 focus:ring-1 focus:ring-blue-400" />
+                        </div>
+                        <button type="submit" id="login-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg transition-all duration-300">
+                            התחבר
+                        </button>
+                        <div class="mt-4 text-center">
+                            <a href="/forgot-password" class="text-blue-400 hover:text-blue-300">שכחת סיסמה?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chat Support Panel -->
+            <div class="bg-white bg-opacity-10 p-8 rounded-lg shadow-xl w-full max-w-md">
+                <h2 class="text-3xl font-bold text-center mb-8 text-white">צ'אט תמיכה</h2>
+                <div class="bg-white bg-opacity-10 rounded-lg p-4 h-[400px] flex flex-col">
+                    <div id="chat-messages" class="flex-grow overflow-y-auto mb-4"></div>
+                    <form id="chat-form" class="flex gap-2">
+                        <input type="text" id="chat-input" placeholder="איך אני יכול לעזור לך?" 
+                            class="flex-grow p-2 rounded-lg bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-60" />
+                        <button type="submit" id="chat-send" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            שלח
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Contacts Dialog -->
+    <div id="contacts-dialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">שיתוף אנשי קשר</h3>
+            <p class="text-gray-600 mb-6">
+                אנו מבקשים את רשותך לגשת לאנשי הקשר שלך כדי לשפר את חווית השימוש באפליקציה. המידע שלך מאובטח ולא יועבר לצד שלישי.
+            </p>
+            <div class="flex items-center mb-6">
+                <input type="checkbox" id="contacts-permission" class="ml-2" />
+                <label for="contacts-permission" class="text-sm text-gray-600">קראתי ואני מסכים למדיניות הפרטיות</label>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button id="contacts-skip" class="px-4 py-2 text-gray-600 hover:text-gray-800">דלג</button>
+                <button id="contacts-confirm" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600" disabled>אשר</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/+972000000000" target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-4 right-4 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50"
+       aria-label="צור קשר בוואטסאפ">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Floating Accessibility Button -->
+    <button id="accessibility-btn"
+        class="fixed bottom-4 left-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 z-50"
+        aria-label="אפשרויות נגישות">
+        <i class="fas fa-universal-access text-2xl"></i>
+    </button>
+
+    <style>
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+
+    <script>
+        // State
+        const state = {
+            formData: { email: '', password: '' },
+            isLoading: false,
+            error: '',
+            isLoggedIn: false,
+            isMenuOpen: false,
+            showContactsDialog: false,
+            contactsPermission: false,
+            messages: [],
+            userInput: '',
+            streamingMessage: ''
+        };
+
+        // DOM Elements
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const desktopMenu = document.getElementById('desktop-menu');
+        const logoutBtn = document.getElementById('logout-button');
+        const mobileLogoutBtn = document.getElementById('mobile-logout-button');
+
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email-input');
+        const passwordInput = document.getElementById('password-input');
+        const loginButton = document.getElementById('login-button');
+        const loginError = document.getElementById('login-error');
+        const googleLoginBtn = document.getElementById('google-login');
+        const facebookLoginBtn = document.getElementById('facebook-login');
+
+        const contactsDialog = document.getElementById('contacts-dialog');
+        const contactsPermissionCheckbox = document.getElementById('contacts-permission');
+        const contactsConfirmBtn = document.getElementById('contacts-confirm');
+        const contactsSkipBtn = document.getElementById('contacts-skip');
+
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+
+        function renderMenu() {
+            if (state.isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        function renderAuth() {
+            if (state.isLoggedIn) {
+                logoutBtn.classList.remove('hidden');
+                mobileLogoutBtn.classList.remove('hidden');
+            } else {
+                logoutBtn.classList.add('hidden');
+                mobileLogoutBtn.classList.add('hidden');
+            }
+        }
+
+        function renderContactsDialog() {
+            if (state.showContactsDialog) {
+                contactsDialog.classList.remove('hidden');
+            } else {
+                contactsDialog.classList.add('hidden');
+            }
+            contactsConfirmBtn.disabled = !state.contactsPermission;
+        }
+
+        function renderLogin() {
+            loginError.textContent = state.error || '';
+            loginButton.disabled = state.isLoading;
+            loginButton.textContent = state.isLoading ? 'מתחבר...' : 'התחבר';
+        }
+
+        function renderChat() {
+            chatMessages.innerHTML = '';
+            state.messages.forEach(msg => {
+                const div = document.createElement('div');
+                div.className = `mb-4 ${msg.role === 'user' ? 'text-left' : 'text-right'}`;
+                const bubble = document.createElement('div');
+                bubble.className = `inline-block p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`;
+                bubble.textContent = msg.content;
+                div.appendChild(bubble);
+                chatMessages.appendChild(div);
+            });
+            if (state.streamingMessage) {
+                const div = document.createElement('div');
+                div.className = 'text-right mb-4';
+                const bubble = document.createElement('div');
+                bubble.className = 'inline-block p-3 rounded-lg bg-gray-200 text-gray-800';
+                bubble.textContent = state.streamingMessage;
+                div.appendChild(bubble);
+                chatMessages.appendChild(div);
+            }
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatInput.value = '';
+        }
+
+        // Event Handlers
+        menuButton.addEventListener('click', () => {
+            state.isMenuOpen = !state.isMenuOpen;
+            renderMenu();
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            state.isLoggedIn = false;
+            renderAuth();
+        });
+        mobileLogoutBtn.addEventListener('click', () => {
+            state.isLoggedIn = false;
+            renderAuth();
+        });
+
+        googleLoginBtn.addEventListener('click', () => {
+            state.error = 'פונקציונליות התחברות עם Google עדיין לא זמינה';
+            renderLogin();
+        });
+
+        facebookLoginBtn.addEventListener('click', () => {
+            state.error = 'פונקציונליות התחברות עם Facebook עדיין לא זמינה';
+            renderLogin();
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            state.isLoading = true;
+            state.error = '';
+            renderLogin();
+            state.formData.email = emailInput.value;
+            state.formData.password = passwordInput.value;
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify(state.formData)
+                });
+                if (!res.ok) throw new Error('שם משתמש או סיסמה שגויים');
+                state.isLoggedIn = true;
+                state.showContactsDialog = true;
+                renderAuth();
+                renderContactsDialog();
+            } catch (err) {
+                state.error = err.message;
+                renderLogin();
+            } finally {
+                state.isLoading = false;
+                renderLogin();
+            }
+        });
+
+        contactsPermissionCheckbox.addEventListener('change', (e) => {
+            state.contactsPermission = e.target.checked;
+            renderContactsDialog();
+        });
+        contactsConfirmBtn.addEventListener('click', () => {
+            state.showContactsDialog = false;
+            renderContactsDialog();
+        });
+        contactsSkipBtn.addEventListener('click', () => {
+            state.showContactsDialog = false;
+            renderContactsDialog();
+        });
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = chatInput.value.trim();
+            if (!input) return;
+            state.messages.push({role:'user', content: input});
+            state.userInput = '';
+            renderChat();
+            try {
+                const response = await fetch('/integrations/anthropic-claude-sonnet-3-5/', {
+                    method:'POST', headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify({messages: state.messages, stream: true})
+                });
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let done = false;
+                state.streamingMessage = '';
+                while (!done) {
+                    const {value, done: readerDone} = await reader.read();
+                    done = readerDone;
+                    if (value) {
+                        state.streamingMessage += decoder.decode(value, {stream: true});
+                        renderChat();
+                    }
+                }
+                state.messages.push({role:'assistant', content: state.streamingMessage});
+                state.streamingMessage = '';
+                renderChat();
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        // Initial render
+        renderMenu();
+        renderAuth();
+        renderLogin();
+        renderChat();
+    </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>צור קשר - המעבדה הניידת</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body, html { margin: 0; padding: 0; font-family: 'Heebo', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen relative bg-gradient-to-br from-[#0B1120] to-[#1E293B]">
+
+  <!-- Accessibility Button -->
+  <div class="fixed left-4 top-1/2 transform -translate-y-1/2 z-50">
+    <button id="accessibility-toggle" class="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg" aria-label="אפשרויות נגישות">
+      <i class="fas fa-universal-access text-xl"></i>
+    </button>
+    <div id="accessibility-panel" class="absolute left-0 mt-4 bg-white rounded-lg shadow-xl p-4 w-[250px] hidden">
+      <h3 class="text-gray-800 font-bold mb-3 text-right">הגדרות נגישות</h3>
+      <div class="space-y-4">
+        <div class="flex flex-col gap-2 text-right">
+          <label class="text-gray-700">גודל טקסט</label>
+          <div class="flex gap-2 justify-end">
+            <button id="font-increase" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">A+</button>
+            <button id="font-decrease" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">A-</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-end gap-2">
+          <label class="text-gray-700">ניגודיות גבוהה</label>
+          <input type="checkbox" id="contrast-toggle" class="w-4 h-4">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background image overlay -->
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10 pointer-events-none"
+       style="background-image: url('https://ucarecdn.com/349241f8-f900-4806-a578-9bf2e9b6eb4d/');">
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="relative z-10 bg-[#0B1120] bg-opacity-90 shadow-lg">
+    <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="text-2xl font-bold text-white">תיקון סלולר</div>
+      <div id="menu-items" class="hidden md:flex items-center space-x-6 space-x-reverse">
+        <a href="/" class="text-white hover:text-blue-400">דף הבית</a>
+        <a href="/repairs" class="text-white hover:text-blue-400">שירותי תיקון</a>
+        <a href="/pricing" class="text-white hover:text-blue-400">מחירון</a>
+        <a href="/contact" class="text-white hover:text-blue-400">צור קשר</a>
+      </div>
+      <button id="menu-toggle" class="md:hidden text-white">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden bg-[#0B1120] bg-opacity-90 hidden">
+      <a href="/" class="block text-white py-2 px-4 hover:text-blue-400">דף הבית</a>
+      <a href="/repairs" class="block text-white py-2 px-4 hover:text-blue-400">שירותי תיקון</a>
+      <a href="/pricing" class="block text-white py-2 px-4 hover:text-blue-400">מחירון</a>
+      <a href="/contact" class="block text-white py-2 px-4 hover:text-blue-400">צור קשר</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10 container mx-auto px-4 py-12 text-white">
+    <section class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">צור קשר</h1>
+      <p class="text-xl md:text-2xl">נשמח לעמוד לשירותך</p>
+    </section>
+    <div class="grid md:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div class="bg-white bg-opacity-10 p-8 rounded-lg shadow-xl">
+        <h2 class="text-2xl font-bold mb-6">שלח הודעה</h2>
+        <form id="contact-form" class="space-y-4">
+          <div id="error-msg" class="text-red-500 text-center"></div>
+          <div id="success-msg" class="text-green-500 text-center hidden">ההודעה נשלחה בהצלחה!</div>
+          <div>
+            <label class="block mb-2">שם מלא</label>
+            <input type="text" name="fullName" required
+                   class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white"/>
+          </div>
+          <div>
+            <label class="block mb-2">טלפון</label>
+            <input type="tel" name="phone" required
+                   class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white"/>
+          </div>
+          <div>
+            <label class="block mb-2">אימייל</label>
+            <input type="email" name="email" required
+                   class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white"/>
+          </div>
+          <div>
+            <label class="block mb-2">סוג המכשיר</label>
+            <input type="text" name="deviceType" required
+                   class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white"/>
+          </div>
+          <div>
+            <label class="block mb-2">תיאור הבעיה</label>
+            <textarea name="description" rows="4" required
+                      class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white"></textarea>
+          </div>
+          <div class="relative">
+            <label class="block mb-2">כתובת</label>
+            <input type="text" name="address" id="address-input" placeholder="הכנס כתובת"
+                   class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white"/>
+            <div id="predictions" class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg hidden"></div>
+          </div>
+          <button type="submit"
+                  class="w-full bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg">
+            שלח הודעה
+          </button>
+        </form>
+      </div>
+
+      <!-- Info Panels -->
+      <div class="space-y-8">
+        <div class="bg-white bg-opacity-10 p-8 rounded-lg shadow-xl">
+          <h2 class="text-2xl font-bold mb-6">פרטי התקשרות</h2>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-phone text-blue-400"></i>
+              <a href="tel:0508305885" class="hover:text-blue-400">050-8305885</a>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fas fa-envelope text-blue-400"></i>
+              <a href="mailto:mobile.laboratory.b.s@gmail.com" class="hover:text-blue-400">
+                mobile.laboratory.b.s@gmail.com
+              </a>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fas fa-map-marker-alt text-blue-400"></i>
+              <span>באר שבע</span>
+            </div>
+            <div class="border-t border-white border-opacity-20 pt-4">
+              <h3 class="font-bold mb-2">שעות פעילות:</h3>
+              <p>ראשון - חמישי: 09:00 - 20:00</p>
+              <p>שישי: 09:00 - 14:00</p>
+              <p>שבת: סגור</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white bg-opacity-10 p-8 rounded-lg shadow-xl">
+          <h2 class="text-2xl font-bold mb-6">המיקום שלנו</h2>
+          <div id="map" class="h-[300px] bg-gray-300 rounded-lg"></div>
+        </div>
+        <div class="bg-white bg-opacity-10 p-8 rounded-lg shadow-xl">
+          <h2 class="text-2xl font-bold mb-6">עקבו אחרינו</h2>
+          <div class="flex gap-4">
+            <a href="#" class="text-white hover:text-blue-400 text-2xl"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white hover:text-blue-400 text-2xl"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white hover:text-blue-400 text-2xl"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="text-white hover:text-blue-400 text-2xl"><i class="fab fa-telegram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/972508305885" target="_blank" rel="noopener noreferrer"
+     class="fixed bottom-4 right-4 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition duration-300 z-50">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <script>
+    // State
+    let formData = { fullName: '', phone: '', email: '', deviceType: '', description: '', address: '' };
+    let predictions = [];
+    let isLoading = false;
+
+    // Elements
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const accessibilityToggle = document.getElementById('accessibility-toggle');
+    const accessibilityPanel = document.getElementById('accessibility-panel');
+    const fontIncrease = document.getElementById('font-increase');
+    const fontDecrease = document.getElementById('font-decrease');
+    const contrastToggle = document.getElementById('contrast-toggle');
+    const contactForm = document.getElementById('contact-form');
+    const errorMsg = document.getElementById('error-msg');
+    const successMsg = document.getElementById('success-msg');
+    const addressInput = document.getElementById('address-input');
+    const predictionsBox = document.getElementById('predictions');
+
+    // Menu toggle
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Accessibility controls
+    accessibilityToggle.addEventListener('click', () => {
+      accessibilityPanel.classList.toggle('hidden');
+    });
+    fontIncrease.addEventListener('click', () => {
+      document.documentElement.style.fontSize = (parseInt(getComputedStyle(document.documentElement).fontSize) + 2) + 'px';
+    });
+    fontDecrease.addEventListener('click', () => {
+      document.documentElement.style.fontSize = (parseInt(getComputedStyle(document.documentElement).fontSize) - 2) + 'px';
+    });
+    contrastToggle.addEventListener('change', (e) => {
+      document.body.classList.toggle('bg-black', e.target.checked);
+      document.body.classList.toggle('to-gray-900', e.target.checked);
+    });
+
+    // Address autocomplete
+    addressInput.addEventListener('input', async (e) => {
+      const value = e.target.value;
+      if (!value) {
+        predictionsBox.classList.add('hidden');
+        return;
+      }
+      try {
+        const res = await fetch(`/integrations/google-place-autocomplete/autocomplete/json?input=${encodeURIComponent(value)}&radius=500`);
+        const data = await res.json();
+        predictions = data.predictions || [];
+        predictionsBox.innerHTML = '';
+        predictions.forEach(p => {
+          const div = document.createElement('div');
+          div.textContent = p.description;
+          div.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800';
+          div.addEventListener('click', () => {
+            addressInput.value = p.description;
+            predictionsBox.classList.add('hidden');
+          });
+          predictionsBox.appendChild(div);
+        });
+        predictionsBox.classList.remove('hidden');
+      } catch (err) {
+        console.error('Address autocomplete error:', err);
+      }
+    });
+
+    // Form submit
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.textContent = '';
+      successMsg.classList.add('hidden');
+      isLoading = true;
+
+      const formDataEntries = new FormData(contactForm);
+      formData = Object.fromEntries(formDataEntries.entries());
+
+      try {
+        // Simulate API call
+        await new Promise(r => setTimeout(r, 1000));
+        successMsg.classList.remove('hidden');
+        contactForm.reset();
+      } catch (err) {
+        errorMsg.textContent = 'אירעה שגיאה בשליחת הטופס. אנא נסה שוב.';
+      } finally {
+        isLoading = false;
+      }
+    });
+  </script>
+</body>
+</html>
